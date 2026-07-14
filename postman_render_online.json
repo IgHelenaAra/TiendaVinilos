@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Fullstack Render Online - Gateway",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gateway_url",
+      "value": "https://demo-fullstack-gateway.onrender.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Listar clientes",
+      "request": {
+        "method": "GET",
+        "url": "{{gateway_url}}/api/clientes/"
+      }
+    },
+    {
+      "name": "02 Listar productos",
+      "request": {
+        "method": "GET",
+        "url": "{{gateway_url}}/api/productos/"
+      }
+    },
+    {
+      "name": "03 Crear pedido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clienteId\": 1,\n  \"productoId\": 1,\n  \"cantidad\": 2\n}"
+        },
+        "url": "{{gateway_url}}/api/pedidos/"
+      }
+    },
+    {
+      "name": "04 Listar pedidos",
+      "request": {
+        "method": "GET",
+        "url": "{{gateway_url}}/api/pedidos/"
+      }
+    },
+    {
+      "name": "05 Crear pago",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"metodo\": \"TARJETA\",\n  \"monto\": 700000\n}"
+        },
+        "url": "{{gateway_url}}/api/pagos/"
+      }
+    },
+    {
+      "name": "06 Crear despacho",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"direccion\": \"Av. Siempre Viva 742\",\n  \"comuna\": \"Santiago\"\n}"
+        },
+        "url": "{{gateway_url}}/api/despachos/"
+      }
+    },
+    {
+      "name": "07 Listar pagos",
+      "request": {
+        "method": "GET",
+        "url": "{{gateway_url}}/api/pagos/"
+      }
+    },
+    {
+      "name": "08 Listar despachos",
+      "request": {
+        "method": "GET",
+        "url": "{{gateway_url}}/api/despachos/"
+      }
+    }
+  ]
+}

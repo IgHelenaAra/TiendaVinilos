@@ -1,0 +1,67 @@
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cliente-service
+      - producto-service
+      - pedido-service
+      - pago-service
+      - despacho-service
+    environment:
+      - EUREKA_ENABLED=false
+      - CLIENTE_SERVICE_URL=http://cliente-service:8081
+      - PRODUCTO_SERVICE_URL=http://producto-service:8082
+      - PEDIDO_SERVICE_URL=http://pedido-service:8083
+      - PAGO_SERVICE_URL=http://pago-service:8084
+      - DESPACHO_SERVICE_URL=http://despacho-service:8085
+
+  cliente-service:
+    build: ./cliente-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_ENABLED=false
+
+  producto-service:
+    build: ./producto-service
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_ENABLED=false
+
+  pedido-service:
+    build: ./pedido-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - cliente-service
+      - producto-service
+    environment:
+      - EUREKA_ENABLED=false
+      - APP_DISCOVERY_ENABLED=false
+      - CLIENTE_SERVICE_URL=http://cliente-service:8081
+      - PRODUCTO_SERVICE_URL=http://producto-service:8082
+
+  pago-service:
+    build: ./pago-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - pedido-service
+    environment:
+      - EUREKA_ENABLED=false
+      - APP_DISCOVERY_ENABLED=false
+      - PEDIDO_SERVICE_URL=http://pedido-service:8083
+
+  despacho-service:
+    build: ./despacho-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - pedido-service
+    environment:
+      - EUREKA_ENABLED=false
+      - APP_DISCOVERY_ENABLED=false
+      - PEDIDO_SERVICE_URL=http://pedido-service:8083
